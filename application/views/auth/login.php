@@ -1,7 +1,7 @@
-<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
     
     <div class="text-center mb-4">
-        <h3 class="fw-bold text-primary"><i class="bi bi-car-front-fill"></i> SmartPark</h3>
+        <h4 class="fw-bold text-secondary">Sign In</h4>
     </div>
 
     <div class="card w-100 p-4">

@@ -33,6 +33,7 @@ class Auth extends CI_Controller {
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
+                    'role' => isset($user->role) ? $user->role : 'operator',
                     'logged_in' => TRUE
                 );
                 $this->session->set_userdata($session_data);

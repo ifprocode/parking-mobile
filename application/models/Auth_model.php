@@ -12,18 +12,15 @@ class Auth_model extends CI_Model {
 
     public function check_login($email, $password)
     {
-        // Placeholder logic: in real app, query database
-        // For demonstration purposes based on the mock, we assume success
-        // return $this->db->get_where('users', ['email' => $email, 'password' => md5($password)])->row();
-
-        if ($email == 'admin@smartpark.com' && $password == 'admin') {
-            return (object) [
-                'id' => 1,
-                'name' => 'Andi',
-                'email' => $email
-            ];
+        // Query the database
+        $this->db->where('email', $email);
+        $this->db->where('password', md5($password));
+        $query = $this->db->get('users');
+        
+        if ($query->num_rows() == 1) {
+            return $query->row();
         }
-
+        
         return false;
     }
 }

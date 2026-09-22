@@ -5,11 +5,13 @@
         
         <div class="text-center mb-3">
             <h6 class="fw-bold mb-1">FOTO MASUK</h6>
-            <img src="https://placehold.co/300x150/333/fff?text=Car+Front" alt="Car Entry" class="img-fluid rounded shadow-sm">
+            <img src="<?= $photo_in ?>" alt="Car Entry" class="img-fluid rounded shadow-sm" style="max-height: 150px; width: 100%; object-fit: cover;">
         </div>
         
         <form action="<?= base_url('parkingout/receipt') ?>" method="post">
             <input type="hidden" name="receipt" value="<?= $receipt ?>">
+            <input type="hidden" name="photo_in" value="<?= $photo_in ?>">
+            <input type="hidden" name="tarif_id" value="<?= isset($tarif_id) ? $tarif_id : '' ?>">
             
             <div class="mb-3">
                 <label class="fw-bold small">WAKTU MASUK:</label>
