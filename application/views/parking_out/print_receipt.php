@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($app_name) ?> - Struk Bayar</title>
     <style>
-        @page { margin: 0; size: 50mm auto; }
+        @page { margin: 0; size: 58mm auto; }
         body {
             font-family: 'Courier New', Courier, monospace;
             font-size: 11px;
-            width: 50mm;
+            width: 58mm;
             margin: 0 auto;
             padding: 5px;
             text-align: left;

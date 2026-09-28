@@ -6,12 +6,12 @@
     <style>
         @page {
             margin: 0;
-            size: 50mm auto; /* approximate thermal width */
+            size: 58mm auto; /* approximate thermal width */
         }
         body {
             font-family: 'Courier New', Courier, monospace;
             font-size: 12px;
-            width: 50mm;
+            width: 58mm;
             margin: 0 auto;
             padding: 5px;
             text-align: left;
@@ -64,6 +64,16 @@
             <td style="vertical-align: top;">:</td>
             <td>GATE 1 (Masuk)</td>
         </tr>
+        <tr>
+            <td style="vertical-align: top;">Total Tarif</td>
+            <td style="vertical-align: top;">:</td>
+            <td>Rp <?= number_format($trx->total_fare, 0, ',', '.') ?></td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;">Status</td>
+            <td style="vertical-align: top;">:</td>
+            <td>LUNAS</td>
+        </tr>
     </table>
     
     <div class="dashed-line"></div>
@@ -75,7 +85,7 @@
         
         <img class="barcode" src="https://bwipjs-api.metafloor.com/?bcid=code128&text=<?= $trx->receipt_number ?>&includetext=false" alt="Barcode">
         
-        <div style="font-size: 10px; margin-top: 8px;">50mm x 110mm</div>
+        <div style="font-size: 10px; margin-top: 8px;">58mm x 110mm</div>
     </div>
 
 </body>

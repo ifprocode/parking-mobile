@@ -18,13 +18,13 @@
             <p class="mb-1 fw-bold">Durasi: <?= $duration ?></p>
         </div>
         
-        <div class="bg-success text-white text-center p-3 rounded-3 mb-4">
-            <h6 class="mb-1">TOTAL TARIF:</h6>
-            <h3 class="fw-bold mb-0"><?= $total_fare ?></h3>
+        <div class="bg-primary text-white text-center p-3 rounded-3 mb-4">
+            <h6 class="mb-1">STATUS:</h6>
+            <h3 class="fw-bold mb-0">KELUAR</h3>
         </div>
         
-        <button id="btnCetak" class="btn btn-primary btn-lg w-100 fw-bold d-flex justify-content-center align-items-center">
-            <i class="bi bi-printer-fill me-2 fs-4"></i> CETAK STRUK BAYAR
+        <button id="btnCetakIframe" type="button" class="btn btn-primary btn-lg w-100 fw-bold d-flex justify-content-center align-items-center text-decoration-none" data-url="<?= base_url('parkingout/print_receipt/' . $receipt) ?>">
+            <i class="bi bi-printer-fill me-2 fs-4"></i> CETAK STRUK KELUAR
         </button>
     </div>
     
@@ -35,38 +35,24 @@
 </div>
 
 <script>
-document.getElementById('btnCetak').addEventListener('click', function() {
-    const btn = this;
-    const originalText = btn.innerHTML;
-    
-    // Loading state
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Memproses...';
-    btn.disabled = true;
-
-    // Call mark_paid endpoint
-    const formData = new FormData();
-    formData.append('receipt', '<?= $receipt ?>');
-
-    fetch('<?= base_url('parkingout/mark_paid') ?>', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        
-        if (data.status === 'success') {
-            // Open print window
-            window.open('<?= base_url('parkingout/print_receipt/' . $receipt) ?>', '_blank');
-        } else {
-            alert('Gagal mengupdate status: ' + data.message);
-        }
-    })
-    .catch(error => {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        alert('Terjadi kesalahan jaringan.');
-    });
+document.addEventListener("DOMContentLoaded", function() {
+    const btnCetakIframe = document.getElementById('btnCetakIframe');
+    if (btnCetakIframe) {
+        btnCetakIframe.addEventListener('click', function() {
+            const url = this.getAttribute('data-url');
+            let iframe = document.getElementById('print-iframe');
+            
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'print-iframe';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
+            
+            iframe.src = url;
+        });
+    }
 });
 </script>
+
+

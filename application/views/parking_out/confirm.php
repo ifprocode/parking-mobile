@@ -11,7 +11,6 @@
         <form action="<?= base_url('parkingout/receipt') ?>" method="post">
             <input type="hidden" name="receipt" value="<?= $receipt ?>">
             <input type="hidden" name="photo_in" value="<?= $photo_in ?>">
-            <input type="hidden" name="tarif_id" value="<?= isset($tarif_id) ? $tarif_id : '' ?>">
             
             <div class="mb-3">
                 <label class="fw-bold small">WAKTU MASUK:</label>
@@ -25,9 +24,13 @@
                     <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                 </div>
             </div>
+            <div class="mb-3">
+                <label class="fw-bold small">STATUS PEMBAYARAN:</label>
+                <div class="form-control text-success fw-bold">LUNAS</div>
+            </div>
             
             <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold mt-2 rounded-3">
-                HITUNG TARIF & SIMPAN KELUAR
+                PROSES KENDARAAN KELUAR
             </button>
         </form>
     </div>

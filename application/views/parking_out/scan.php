@@ -23,7 +23,7 @@
     <!-- Action Area -->
     <div class="position-absolute w-100 text-center" style="bottom: 40px; z-index: 10;">
         <form id="scan-form" action="<?= base_url('parkingout/confirm') ?>" method="post">
-            <input type="hidden" name="tarif_id" value="<?= isset($tarif_id) ? $tarif_id : '' ?>">
+
             <!-- Will be populated by QR scanner, or fallback manual if empty -->
             <input type="hidden" name="receipt" id="receipt-input" value="SP-12345">
             <button type="button" onclick="manualEntry()" class="btn btn-light fw-bold px-5 py-2" style="border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">

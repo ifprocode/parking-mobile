@@ -18,11 +18,26 @@ class ParkingIn extends CI_Controller {
         }
     }
 
-    public function photo()
+    public function select_tarif()
     {
-        $data['show_navbar'] = false; // Hide navbar for camera view like mockup
+        $data['show_navbar'] = true;
+        $data['tarifs'] = $this->db->get('tarifs')->result();
+        
         $this->load->view('layout/header', $data);
-        $this->load->view('parking_in/photo');
+        $this->load->view('parking_in/select_tarif', $data);
+        $this->load->view('layout/footer');
+    }
+
+    public function photo($tarif_id = null)
+    {
+        if (!$tarif_id) {
+            redirect('parkingin/select_tarif');
+        }
+
+        $data['show_navbar'] = false; // Hide navbar for camera view like mockup
+        $data['tarif_id'] = $tarif_id;
+        $this->load->view('layout/header', $data);
+        $this->load->view('parking_in/photo', $data);
         $this->load->view('layout/footer');
     }
 
@@ -30,8 +45,13 @@ class ParkingIn extends CI_Controller {
     {
         $post_plate = $this->input->post('plate_number');
         $post_photo = $this->input->post('photo_base64');
+        $tarif_id = $this->input->post('tarif_id');
         $receipt = 'SP-' . rand(10000, 99999);
         $filename = '';
+
+        // Get Tarif details
+        $tarif = $this->db->get_where('tarifs', ['id' => $tarif_id])->row();
+        $total_fare = $tarif ? $tarif->flat_fare : 0;
 
         // Handle Base64 Image Saving
         if (!empty($post_photo)) {
@@ -50,7 +70,10 @@ class ParkingIn extends CI_Controller {
             'plate_number' => $post_plate ? $post_plate : 'AB 1234 CD',
             'time_in' => date('Y-m-d H:i:s'),
             'operator_id' => $this->session->userdata('id'),
-            'photo_in' => $filename 
+            'photo_in' => $filename,
+            'tarif_id' => $tarif_id,
+            'total_fare' => $total_fare,
+            'status' => 'paid'
         ];
         
         $this->Parking_model->save_inflow($data_to_save);
@@ -59,6 +82,9 @@ class ParkingIn extends CI_Controller {
         $data['receipt'] = $receipt;
         $data['plate'] = $data_to_save['plate_number'];
         $data['time_in'] = date('H:i:s d M Y', strtotime($data_to_save['time_in']));
+        $data['total_fare'] = $total_fare;
+        $data['tarif_id'] = $tarif_id;
+        $data['tarif_name'] = $tarif ? $tarif->vehicle_type : '';
         
         // Pass the actual image URL to the view
         $data['photo_src'] = $filename ? base_url('foto/' . $filename) : 'https://placehold.co/60x40/333/fff?text=Car';

@@ -18,24 +18,9 @@ class ParkingOut extends CI_Controller {
         }
     }
 
-    public function select_tarif()
+    public function scan()
     {
-        $data['show_navbar'] = true;
-        $data['tarifs'] = $this->db->get('tarifs')->result();
-        
-        $this->load->view('layout/header', $data);
-        $this->load->view('parking_out/select_tarif', $data);
-        $this->load->view('layout/footer');
-    }
-
-    public function scan($tarif_id = null)
-    {
-        if (!$tarif_id) {
-            redirect('parkingout/select_tarif');
-        }
-
         $data['show_navbar'] = false;
-        $data['tarif_id'] = $tarif_id;
         $this->load->view('layout/header', $data);
         $this->load->view('parking_out/scan', $data);
         $this->load->view('layout/footer');
@@ -44,19 +29,18 @@ class ParkingOut extends CI_Controller {
     public function confirm()
     {
         $receipt = $this->input->post('receipt') ?? '';
-        $tarif_id = $this->input->post('tarif_id') ?? '';
         $transaction = $this->Parking_model->get_transaction_by_receipt($receipt);
 
         // Validation: Transaction not found
         if (!$transaction) {
             $this->session->set_flashdata('error', 'Resi tidak ditemukan!');
-            redirect('parkingout/scan/' . $tarif_id);
+            redirect('parkingout/scan');
         }
 
         // Validation: Already scanned out
         if ($transaction->time_out != NULL) {
             $this->session->set_flashdata('error', 'Kendaraan ini sudah diproses keluar sebelumnya!');
-            redirect('parkingout/scan/' . $tarif_id);
+            redirect('parkingout/scan');
         }
 
         $data['show_navbar'] = true;
@@ -65,7 +49,6 @@ class ParkingOut extends CI_Controller {
         $data['time_in'] = $transaction ? date('H:i:s d M Y', strtotime($transaction->time_in)) : date('H:i:s d M Y');
         $data['time_out'] = date('H:i:s d M Y'); // current time
         $data['photo_in'] = ($transaction && $transaction->photo_in) ? base_url('foto/' . $transaction->photo_in) : 'https://placehold.co/150x100/333/fff?text=No+Photo';
-        $data['tarif_id'] = $tarif_id;
         
         $this->load->view('layout/header', $data);
         $this->load->view('parking_out/confirm', $data);
@@ -76,13 +59,8 @@ class ParkingOut extends CI_Controller {
     {
         $receipt = $this->input->post('receipt');
         $time_out_str = $this->input->post('time_out');
-        $tarif_id = $this->input->post('tarif_id');
         
         $transaction = $this->Parking_model->get_transaction_by_receipt($receipt);
-        $tarif = $this->db->get_where('tarifs', ['id' => $tarif_id])->row();
-        
-        // Mode is determined by the Master Tarif
-        $mode = isset($tarif->mode) ? $tarif->mode : 'progresif';
         
         $time_in = strtotime($transaction->time_in);
         // Convert submitted time string back to timestamp (format: H:i:s d M Y)
@@ -91,32 +69,22 @@ class ParkingOut extends CI_Controller {
         $diff_seconds = $time_out - $time_in;
         if ($diff_seconds < 0) $diff_seconds = 0;
         
-        $duration_text = '';
-        $total = 0;
-
-        if ($mode == 'progresif') {
-            $hours = ceil($diff_seconds / 3600);
-            if ($hours == 0) $hours = 1; // Min 1 hour
-            $total = $hours * $tarif->hourly_fare;
-            $duration_text = $hours . ' Jam';
-        } else {
-            // Flat Rate
-            $days = ceil($diff_seconds / 86400);
-            if ($days == 0) $days = 1; // Min 1 day
-            $total = $days * $tarif->flat_fare;
-            $duration_text = $days . ' Hari';
-        }
+        $days = floor($diff_seconds / 86400);
+        $hours = floor(($diff_seconds % 86400) / 3600);
+        $minutes = floor(($diff_seconds % 3600) / 60);
+        
+        $duration_text = "{$days} Hari {$hours} Jam {$minutes} Menit";
         
         // Save outflow
         $this->Parking_model->save_outflow($receipt, [
             'time_out' => date('Y-m-d H:i:s', $time_out),
-            'total_fare' => $total
+            'status' => 'out'
         ]);
 
         $data['show_navbar'] = true;
         $data['receipt'] = $receipt;
         $data['duration'] = $duration_text;
-        $data['total_fare'] = 'Rp ' . number_format($total, 0, ',', '.');
+        $data['total_fare'] = 'Rp ' . number_format($transaction->total_fare, 0, ',', '.');
         $data['photo_in'] = $transaction->photo_in ? base_url('foto/' . $transaction->photo_in) : 'https://placehold.co/150x100/333/fff?text=Car+In';
 
         $this->load->view('layout/header', $data);

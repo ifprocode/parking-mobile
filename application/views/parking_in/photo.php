@@ -45,6 +45,7 @@
 <form id="ocr-form" action="<?= base_url('parkingin/save') ?>" method="post" class="d-none">
     <input type="hidden" name="plate_number" id="plate_number">
     <input type="hidden" name="photo_base64" id="photo_base64">
+    <input type="hidden" name="tarif_id" value="<?= isset($tarif_id) ? $tarif_id : '' ?>">
 </form>
 
 <!-- Tesseract.js -->

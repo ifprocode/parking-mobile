@@ -57,11 +57,19 @@ BEGIN
         photo_in VARCHAR(255) NULL,
         photo_out VARCHAR(255) NULL,
         operator_id INT NOT NULL,
+        tarif_id INT NULL,
         total_fare DECIMAL(10,2) NULL,
         status VARCHAR(20) DEFAULT 'unpaid',
         created_at DATETIME DEFAULT GETDATE(),
         CONSTRAINT FK_Parking_Operator FOREIGN KEY (operator_id) REFERENCES users(id)
     );
+END
+GO
+
+-- Add tarif_id column if it doesn't exist (for existing tables)
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('parking_transactions') AND name = 'tarif_id')
+BEGIN
+    ALTER TABLE parking_transactions ADD tarif_id INT NULL;
 END
 GO
 
