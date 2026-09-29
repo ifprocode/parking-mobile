@@ -76,6 +76,8 @@ if (isset($CI->db)) {
                         <li><a class="dropdown-item" href="<?= base_url('admin/vehicles') ?>"><i class="bi bi-car-front me-2"></i> List Kendaraan</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="<?= base_url('admin/headers') ?>"><i class="bi bi-type me-2"></i> Master Header</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="<?= base_url('admin/users') ?>"><i class="bi bi-people me-2"></i> Manajemen User</a></li>
                     </ul>
                 </li>
                 <?php endif; ?>

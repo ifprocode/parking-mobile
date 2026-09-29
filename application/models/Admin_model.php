@@ -115,4 +115,25 @@ class Admin_model extends CI_Model {
         $this->db->order_by('time_in', 'DESC');
         return $this->db->get('parking_transactions')->result();
     }
+    // Users
+    public function get_all_users()
+    {
+        return $this->db->get('users')->result();
+    }
+
+    public function save_user($id, $data)
+    {
+        if ($id) {
+            $this->db->where('id', $id);
+            return $this->db->update('users', $data);
+        } else {
+            return $this->db->insert('users', $data);
+        }
+    }
+
+    public function delete_user($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->delete('users');
+    }
 }

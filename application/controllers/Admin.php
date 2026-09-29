@@ -118,4 +118,41 @@ class Admin extends CI_Controller {
         $this->session->set_flashdata('success', 'Header aktif berhasil diubah!');
         redirect('admin/headers');
     }
+    // 5. Users Management
+    public function users()
+    {
+        $data['show_navbar'] = true;
+        $data['active_menu'] = 'users';
+        $data['users'] = $this->Admin_model->get_all_users();
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('admin/users', $data);
+        $this->load->view('layout/footer');
+    }
+
+    public function save_user()
+    {
+        $id = $this->input->post('id');
+        $data = [
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'role' => $this->input->post('role')
+        ];
+        
+        $password = $this->input->post('password');
+        if (!empty($password)) {
+            $data['password'] = md5($password);
+        }
+
+        $this->Admin_model->save_user($id, $data);
+        $this->session->set_flashdata('success', 'User berhasil disimpan!');
+        redirect('admin/users');
+    }
+
+    public function delete_user($id)
+    {
+        $this->Admin_model->delete_user($id);
+        $this->session->set_flashdata('success', 'User berhasil dihapus!');
+        redirect('admin/users');
+    }
 }
