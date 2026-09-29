@@ -102,6 +102,9 @@
                 // 5. Clean up OCR text (remove non-alphanumeric, newlines, etc.)
                 let text = ret.data.text.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
                 
+                // Batasi hingga 10 karakter
+                text = text.substring(0, 10);
+                
                 // Set fallback if empty
                 if (!text || text.trim() === '') {
                     text = "UNREADABLE";

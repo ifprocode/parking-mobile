@@ -12,7 +12,7 @@
             <div class="col-6 fw-bold align-self-center">Plat</div>
             <div class="col-6">
                 <div class="input-group input-group-sm">
-                    <input type="text" class="form-control fw-bold text-success" id="plate-input" value="<?= $plate ?>">
+                    <input type="text" class="form-control fw-bold text-success" id="plate-input" value="<?= $plate ?>" maxlength="10">
                     <button class="btn btn-outline-secondary" type="button" id="btn-update-plate" title="Simpan Perubahan"><i class="bi bi-check-lg"></i></button>
                 </div>
                 <small id="update-status" class="text-success d-none" style="font-size: 0.7rem;">Berhasil diupdate!</small>
