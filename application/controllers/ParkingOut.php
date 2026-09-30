@@ -43,11 +43,23 @@ class ParkingOut extends CI_Controller {
             redirect('parkingout/scan');
         }
 
+        // Calculate exact duration here for confirm page
+        $time_in_stamp = strtotime($transaction->time_in);
+        $time_out_stamp = time();
+        $diff_seconds = $time_out_stamp - $time_in_stamp;
+        if ($diff_seconds < 0) $diff_seconds = 0;
+        
+        $days = floor($diff_seconds / 86400);
+        $hours = floor(($diff_seconds % 86400) / 3600);
+        $minutes = floor(($diff_seconds % 3600) / 60);
+        $duration_text = "{$days} Hari {$hours} Jam {$minutes} Menit";
+
         $data['show_navbar'] = true;
         $data['receipt'] = $transaction->receipt_number;
         $data['plate'] = $transaction ? $transaction->plate_number : 'NOT FOUND';
         $data['time_in'] = $transaction ? date('H:i:s d M Y', strtotime($transaction->time_in)) : date('H:i:s d M Y');
-        $data['time_out'] = date('H:i:s d M Y'); // current time
+        $data['time_out'] = date('H:i:s d M Y', $time_out_stamp); // current time
+        $data['duration_text'] = $duration_text;
         $data['photo_in'] = ($transaction && $transaction->photo_in) ? base_url('foto/' . $transaction->photo_in) : 'https://placehold.co/150x100/333/fff?text=No+Photo';
         
         $this->load->view('layout/header', $data);

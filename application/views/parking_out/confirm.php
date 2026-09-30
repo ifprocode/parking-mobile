@@ -28,6 +28,10 @@
                 <label class="fw-bold small">STATUS PEMBAYARAN:</label>
                 <div class="form-control text-success fw-bold">LUNAS</div>
             </div>
+            <div class="mb-3">
+                <label class="fw-bold small">DURASI PARKIR:</label>
+                <div class="form-control text-primary fw-bold bg-light"><?= $duration_text ?></div>
+            </div>
             
             <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold mt-2 rounded-3">
                 PROSES KENDARAAN KELUAR

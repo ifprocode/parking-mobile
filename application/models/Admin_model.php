@@ -41,6 +41,46 @@ class Admin_model extends CI_Model {
         ];
     }
 
+    public function get_overall_metrics()
+    {
+        $this->db->select_sum('total_fare');
+        $query = $this->db->get('parking_transactions');
+        $total_income = $query->row()->total_fare ? $query->row()->total_fare : 0;
+
+        $total_in = $this->db->count_all_results('parking_transactions');
+
+        $this->db->where('time_out IS NOT NULL', null, false);
+        $total_out = $this->db->count_all_results('parking_transactions');
+
+        $this->db->where('time_out IS NULL', null, false);
+        $total_inside = $this->db->count_all_results('parking_transactions');
+
+        return [
+            'total_income' => $total_income,
+            'total_in' => $total_in,
+            'total_out' => $total_out,
+            'total_inside' => $total_inside
+        ];
+    }
+
+    public function get_income_per_user()
+    {
+        $this->db->select('u.name, SUM(p.total_fare) as total_income');
+        $this->db->from('parking_transactions p');
+        $this->db->join('users u', 'p.operator_id = u.id');
+        $this->db->group_by('u.id, u.name');
+        return $this->db->get()->result();
+    }
+
+    public function get_total_per_vehicle_type()
+    {
+        $this->db->select('t.vehicle_type, COUNT(p.id) as total_count');
+        $this->db->from('parking_transactions p');
+        $this->db->join('tarifs t', 'p.tarif_id = t.id');
+        $this->db->group_by('t.id, t.vehicle_type');
+        return $this->db->get()->result();
+    }
+
     // Tarifs
     public function get_all_tarifs()
     {

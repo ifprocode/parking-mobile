@@ -23,9 +23,13 @@
             <h3 class="fw-bold mb-0">KELUAR</h3>
         </div>
         
-        <button id="btnCetakIframe" type="button" class="btn btn-primary btn-lg w-100 fw-bold d-flex justify-content-center align-items-center text-decoration-none" data-url="<?= base_url('parkingout/print_receipt/' . $receipt) ?>">
+        <button id="btnCetakIframe" type="button" class="btn btn-primary btn-lg w-100 fw-bold d-flex justify-content-center align-items-center text-decoration-none mb-3" data-url="<?= base_url('parkingout/print_receipt/' . $receipt) ?>">
             <i class="bi bi-printer-fill me-2 fs-4"></i> CETAK STRUK KELUAR
         </button>
+        
+        <a href="<?= base_url('parkingout/scan') ?>" class="btn btn-outline-primary btn-lg w-100 fw-bold d-flex justify-content-center align-items-center text-decoration-none">
+            <i class="bi bi-arrow-repeat me-2 fs-4"></i> PROSES KENDARAAN LAIN
+        </a>
     </div>
     
     <div class="text-center mt-4">
@@ -51,6 +55,11 @@ document.addEventListener("DOMContentLoaded", function() {
             
             iframe.src = url;
         });
+
+        // Auto trigger print when page loads
+        setTimeout(function() {
+            btnCetakIframe.click();
+        }, 800);
     }
 });
 </script>
