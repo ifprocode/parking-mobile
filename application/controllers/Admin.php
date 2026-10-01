@@ -28,7 +28,12 @@ class Admin extends CI_Controller {
     {
         $data['show_navbar'] = true;
         $data['active_menu'] = 'dashboard';
+        
+        // Fetch all monitoring data
         $data['metrics'] = $this->Admin_model->get_dashboard_metrics();
+        $data['overall_metrics'] = $this->Admin_model->get_overall_metrics();
+        $data['income_per_user'] = $this->Admin_model->get_income_per_user();
+        $data['vehicle_types'] = $this->Admin_model->get_total_per_vehicle_type();
 
         $this->load->view('layout/header', $data);
         $this->load->view('admin/dashboard', $data);
