@@ -104,29 +104,6 @@ class ParkingOut extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-    public function print_receipt($receipt)
-    {
-        $this->load->model('Admin_model');
-        
-        $data['trx'] = $this->Parking_model->get_transaction_by_receipt($receipt);
-        if (!$data['trx']) {
-            show_404();
-        }
-        
-        $data['app_name'] = $this->Admin_model->get_active_header();
-        
-        // Calculate exact duration
-        $diff = strtotime($data['trx']->time_out) - strtotime($data['trx']->time_in);
-        if ($diff < 0) $diff = 0;
-        
-        $days = floor($diff / 86400);
-        $hours = floor(($diff % 86400) / 3600);
-        $minutes = floor(($diff % 3600) / 60);
-        
-        $data['duration_exact'] = "{$days} Hari {$hours} Jam {$minutes} Menit";
-        
-        $this->load->view('parking_out/print_receipt', $data);
-    }
 
     public function mark_paid()
     {

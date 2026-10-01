@@ -12,13 +12,13 @@
     <?php endif; ?>
 
     <div class="row mb-4">
-        <div class="col-6">
+        <!-- <div class="col-6">
             <div class="card bg-primary text-white border-0 shadow-sm text-center p-3" style="border-radius: 12px;">
                 <h6 class="mb-1" style="font-size: 0.8rem; opacity: 0.8;">Transaksi Anda (Hari Ini)</h6>
                 <h2 class="mb-0 fw-bold"><?= isset($user_trx) ? $user_trx : 0 ?></h2>
             </div>
-        </div>
-        <div class="col-6">
+        </div> -->
+        <div class="col-12">
             <div class="card bg-success text-white border-0 shadow-sm text-center p-3" style="border-radius: 12px;">
                 <h6 class="mb-1" style="font-size: 0.8rem; opacity: 0.8;">Total Transaksi (Hari Ini)</h6>
                 <h2 class="mb-0 fw-bold"><?= isset($total_trx) ? $total_trx : 0 ?></h2>

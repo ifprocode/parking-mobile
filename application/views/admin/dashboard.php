@@ -64,8 +64,24 @@
                 </div>
             </div>
         </div>
+        </div>
+
+        <!-- Total Batal Parkir -->
+        <div class="col-12">
+            <div class="card bg-secondary text-white border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-white-50 mb-1">Total Batal Parkir (Hari Ini)</h6>
+                            <h3 class="fw-bold mb-0"><?= isset($metrics['total_cancelled']) ? $metrics['total_cancelled'] : 0 ?></h3>
+                        </div>
+                        <i class="bi bi-x-octagon fs-1 text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
+
     <div class="mt-4">
         <a href="<?= base_url('admin/vehicles') ?>" class="btn btn-outline-primary w-100 py-3 shadow-sm rounded-3 fw-bold">
             <i class="bi bi-list-ul me-2"></i> LIHAT SEMUA KENDARAAN

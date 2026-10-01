@@ -36,6 +36,7 @@ class Parking_model extends CI_Model {
         $today = date('Y-m-d');
         $this->db->where('CONVERT(date, time_in) =', $today);
         $this->db->where('operator_id', $user_id);
+        $this->db->where("(status != 'cancelled' OR status IS NULL)", null, false);
         return $this->db->count_all_results('parking_transactions');
     }
 
@@ -43,6 +44,7 @@ class Parking_model extends CI_Model {
     {
         $today = date('Y-m-d');
         $this->db->where('CONVERT(date, time_in) =', $today);
+        $this->db->where("(status != 'cancelled' OR status IS NULL)", null, false);
         return $this->db->count_all_results('parking_transactions');
     }
 
@@ -53,6 +55,7 @@ class Parking_model extends CI_Model {
         $this->db->from('parking_transactions p');
         $this->db->join('tarifs t', 'p.tarif_id = t.id');
         $this->db->where('CONVERT(date, p.time_in) =', $today);
+        $this->db->where("(p.status != 'cancelled' OR p.status IS NULL)", null, false);
         $this->db->group_by('t.id, t.vehicle_type');
         return $this->db->get()->result();
     }

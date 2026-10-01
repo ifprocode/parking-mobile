@@ -52,7 +52,7 @@
         <tr>
             <td style="vertical-align: top;">Plat Nomor</td>
             <td style="vertical-align: top;">:</td>
-            <td><?= htmlspecialchars($trx->plate_number) ?></td>
+            <td>-</td>
         </tr>
         <tr>
             <td style="vertical-align: top;">Waktu Masuk</td>
@@ -80,12 +80,15 @@
     
     <div class="text-center">
         <!-- Using external APIs for QR and Barcode generation as requested -->
-        <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= $trx->receipt_number ?>" alt="QR">
+        <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=<?= $trx->receipt_number ?>" alt="QR">
         <div style="font-size: 11px; margin-top: 5px;">SCAN QR SAAT KELUAR</div>
         
-        <img class="barcode" src="https://bwipjs-api.metafloor.com/?bcid=code128&text=<?= $trx->receipt_number ?>&includetext=false" alt="Barcode">
-        
-        <div style="font-size: 10px; margin-top: 8px;">58mm x 110mm</div>
+        <div style="font-size: 10px; margin-top: 8px;">
+            KETENTUAN PARKIR <br>
+            1. Tiket parkir berlaku untuk 1 (satu) kendaraan dan 1 (satu) kali keluar. <br>
+            2. Tiket wajib disimpan dan ditunjukkan kepada petugas saat kendaraan keluar. <br>
+            3. Pengguna bertanggung jawab atas kendaraan dan barang-barang yang ditinggalkan di dalam kendaraan. Pengelola BHC Parkir tidak bertanggung jawab atas kehilangan atau kerusakan kendaraan maupun barang pribadi akibat kelalaian pengguna.
+        </div>
     </div>
 
 </body>

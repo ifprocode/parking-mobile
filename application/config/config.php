@@ -23,6 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+// $config['base_url'] = 'http://10.119.154.40/parking-mobile/';
 $config['base_url'] = 'http://localhost/parking-mobile/';
 
 /*

@@ -72,13 +72,24 @@ class Admin extends CI_Controller {
     // 3. List Vehicle
     public function vehicles()
     {
+        $search = $this->input->get('search');
+        $date = $this->input->get('date');
         $data['show_navbar'] = true;
         $data['active_menu'] = 'vehicles';
-        $data['transactions'] = $this->Admin_model->get_all_vehicles();
+        $data['search'] = $search;
+        $data['date'] = $date;
+        $data['transactions'] = $this->Admin_model->get_all_vehicles($search, $date);
 
         $this->load->view('layout/header', $data);
         $this->load->view('admin/vehicles', $data);
         $this->load->view('layout/footer');
+    }
+
+    public function cancel_vehicle($id)
+    {
+        $this->Admin_model->cancel_vehicle($id);
+        $this->session->set_flashdata('success', 'Kendaraan berhasil dibatalkan (Tidak jadi parkir).');
+        redirect('admin/vehicles');
     }
 
     // 4. Headers

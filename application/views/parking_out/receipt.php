@@ -23,10 +23,6 @@
             <h3 class="fw-bold mb-0">KELUAR</h3>
         </div>
         
-        <button id="btnCetakIframe" type="button" class="btn btn-primary btn-lg w-100 fw-bold d-flex justify-content-center align-items-center text-decoration-none mb-3" data-url="<?= base_url('parkingout/print_receipt/' . $receipt) ?>">
-            <i class="bi bi-printer-fill me-2 fs-4"></i> CETAK STRUK KELUAR
-        </button>
-        
         <a href="<?= base_url('parkingout/scan') ?>" class="btn btn-outline-primary btn-lg w-100 fw-bold d-flex justify-content-center align-items-center text-decoration-none">
             <i class="bi bi-arrow-repeat me-2 fs-4"></i> PROSES KENDARAAN LAIN
         </a>
@@ -35,33 +31,4 @@
     <div class="text-center mt-4">
         <a href="<?= base_url('dashboard') ?>" class="text-decoration-none">Kembali ke Beranda</a>
     </div>
-
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const btnCetakIframe = document.getElementById('btnCetakIframe');
-    if (btnCetakIframe) {
-        btnCetakIframe.addEventListener('click', function() {
-            const url = this.getAttribute('data-url');
-            let iframe = document.getElementById('print-iframe');
-            
-            if (!iframe) {
-                iframe = document.createElement('iframe');
-                iframe.id = 'print-iframe';
-                iframe.style.display = 'none';
-                document.body.appendChild(iframe);
-            }
-            
-            iframe.src = url;
-        });
-
-        // Auto trigger print when page loads
-        setTimeout(function() {
-            btnCetakIframe.click();
-        }, 800);
-    }
-});
-</script>
-
-
