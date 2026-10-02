@@ -52,3 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'auth/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// Custom routes to fix case-sensitivity on Linux production servers
+$route['parkingin'] = 'ParkingIn';
+$route['parkingin/(:any)'] = 'ParkingIn/$1';
+$route['parkingout'] = 'ParkingOut';
+$route['parkingout/(:any)'] = 'ParkingOut/$1';
