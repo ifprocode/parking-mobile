@@ -59,5 +59,5 @@ $controllers = ['Admin', 'Auth', 'Dashboard', 'ParkingIn', 'ParkingOut', 'Welcom
 foreach ($controllers as $controller) {
     $lower = strtolower($controller);
     $route[$lower] = $controller;
-    $route[$lower . '/(:any)'] = $controller . '/$1';
+    $route[$lower . '/(.+)'] = $controller . '/$1';
 }
