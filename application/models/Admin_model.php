@@ -15,12 +15,12 @@ class Admin_model extends CI_Model {
         $today = date('Y-m-d');
         
         // Total In Today
-        $this->db->where('CONVERT(date, time_in) =', $today);
+        $this->db->where('DATE(time_in) =', $today);
         $this->db->where("(status != 'cancelled' OR status IS NULL)", null, false);
         $total_in = $this->db->count_all_results('parking_transactions');
 
         // Total Out Today
-        $this->db->where('CONVERT(date, time_out) =', $today);
+        $this->db->where('DATE(time_out) =', $today);
         $this->db->where("(status != 'cancelled' OR status IS NULL)", null, false);
         $total_out = $this->db->count_all_results('parking_transactions');
 
@@ -31,14 +31,14 @@ class Admin_model extends CI_Model {
 
         // Total Income Today
         $this->db->select_sum('total_fare');
-        $this->db->where('CONVERT(date, time_out) =', $today);
+        $this->db->where('DATE(time_out) =', $today);
         $this->db->where("(status != 'cancelled' OR status IS NULL)", null, false);
         $query = $this->db->get('parking_transactions');
         $income_row = $query->row();
         $total_income = $income_row->total_fare ? $income_row->total_fare : 0;
 
         // Total Cancelled Today
-        $this->db->where('CONVERT(date, time_in) =', $today);
+        $this->db->where('DATE(time_in) =', $today);
         $this->db->where('status', 'cancelled');
         $total_cancelled = $this->db->count_all_results('parking_transactions');
 
@@ -175,7 +175,7 @@ class Admin_model extends CI_Model {
             $this->db->group_end();
         }
         if ($date) {
-            $this->db->where('CONVERT(date, time_in) =', $date);
+            $this->db->where('DATE(time_in) =', $date);
         }
         $this->db->order_by('time_in', 'DESC');
         return $this->db->get('parking_transactions')->result();
