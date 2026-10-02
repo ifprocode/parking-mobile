@@ -46,7 +46,7 @@ class ParkingIn extends CI_Controller {
         $post_plate = $this->input->post('plate_number');
         $post_photo = $this->input->post('photo_base64');
         $tarif_id = $this->input->post('tarif_id');
-        $receipt = 'SP-' . rand(10000, 99999);
+        $receipt = (string) rand(1, 9999);
         $filename = '';
 
         // Get Tarif details
@@ -67,7 +67,7 @@ class ParkingIn extends CI_Controller {
         
         $data_to_save = [
             'receipt_number' => $receipt,
-            'plate_number' => $post_plate ? $post_plate : 'AB 1234 CD',
+            'plate_number' => $post_plate ? $post_plate : '-',
             'time_in' => date('Y-m-d H:i:s'),
             'operator_id' => $this->session->userdata('id'),
             'photo_in' => $filename,

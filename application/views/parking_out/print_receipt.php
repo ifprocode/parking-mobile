@@ -31,12 +31,12 @@
         <?= htmlspecialchars($app_name) ?>
     </div>
     
-    <div style="margin-bottom: 5px; font-size: 10px;">
-        <?= $trx->receipt_number ?>
+    <div style="margin-bottom: 5px; font-size: 10px;" class="text-bold">
+        Nomor Tiket : <?= $trx->receipt_number ?>
     </div>
     
-    <div style="margin-bottom: 5px;">
-        NOPOL : <?= htmlspecialchars($trx->plate_number) ?>
+    <div style="margin-bottom: 5px;" class="text-bold">
+        Plat Nomor : <?= htmlspecialchars($trx->plate_number) ?>
     </div>
     
     <table>

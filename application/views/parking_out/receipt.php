@@ -6,11 +6,11 @@
         <div class="row text-center mb-3">
             <div class="col-6">
                 <h6 class="fw-bold small mb-1">FOTO MASUK</h6>
-                <img src="<?= $photo_in ?>" alt="Car Entry" class="img-fluid rounded border" style="max-height: 100px; width: 100%; object-fit: cover;">
+                <img src="<?= $photo_in ?>" alt="Car Entry" class="img-fluid rounded border" style="aspect-ratio: 3/4; width: 100%; object-fit: cover;">
             </div>
             <div class="col-6">
                 <h6 class="fw-bold small mb-1">FOTO KELUAR</h6>
-                <img src="https://placehold.co/150x100/333/fff?text=Car+Out" alt="Car Exit" class="img-fluid rounded border" style="max-height: 100px; width: 100%; object-fit: cover;">
+                <img src="https://placehold.co/150x200/333/fff?text=Car+Out" alt="Car Exit" class="img-fluid rounded border" style="aspect-ratio: 3/4; width: 100%; object-fit: cover;">
             </div>
         </div>
         

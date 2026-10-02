@@ -45,14 +45,14 @@
     
     <table>
         <tr>
-            <td style="width: 38%; vertical-align: top;">Nomor Tiket</td>
+            <td style="width: 38%; vertical-align: top;" class="text-bold">Nomor Tiket</td>
             <td style="width: 5%; vertical-align: top;">:</td>
-            <td style="width: 57%;"><?= $trx->receipt_number ?></td>
+            <td class="text-bold" style="font-size: 15px; width: 57%;"><?= $trx->receipt_number ?></td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">Plat Nomor</td>
+            <td style="vertical-align: top;" class="text-bold">Plat Nomor</td>
             <td style="vertical-align: top;">:</td>
-            <td>-</td>
+            <td class="text-bold" style="font-size: 15px;"><?= $trx->plate_number ?></td>
         </tr>
         <tr>
             <td style="vertical-align: top;">Waktu Masuk</td>
@@ -81,13 +81,14 @@
     <div class="text-center">
         <!-- Using external APIs for QR and Barcode generation as requested -->
         <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=<?= $trx->receipt_number ?>" alt="QR">
-        <div style="font-size: 11px; margin-top: 5px;">SCAN QR SAAT KELUAR</div>
+        <div style="font-size: 11px; margin-top: 5px;" class="text-bold" >SCAN QR SAAT KELUAR</div>
         
         <div style="font-size: 10px; margin-top: 8px;">
-            KETENTUAN PARKIR <br>
-            1. Tiket parkir berlaku untuk 1 (satu) kendaraan dan 1 (satu) kali keluar. <br>
-            2. Tiket wajib disimpan dan ditunjukkan kepada petugas saat kendaraan keluar. <br>
-            3. Pengguna bertanggung jawab atas kendaraan dan barang-barang yang ditinggalkan di dalam kendaraan. Pengelola BHC Parkir tidak bertanggung jawab atas kehilangan atau kerusakan kendaraan maupun barang pribadi akibat kelalaian pengguna.
+            <span style="font-size: 12px;" class="text-bold">KETENTUAN PARKIR</span> <br>
+            <span style="font-size: 12px;" class="text-bold">1. Tiket parkir berlaku untuk 1 (satu) kendaraan dan 1 (satu) kali keluar.</span> <br>
+            <span style="font-size: 12px;" class="text-bold">2. Tiket wajib disimpan dan ditunjukkan kepada petugas saat kendaraan keluar.</span> <br>
+            <span style="font-size: 12px;" class="text-bold">3. Pengelola BHC Parkir tidak bertanggung jawab atas kehilangan atau kerusakan kendaraan maupun barang pribadi akibat kelalaian pengguna.</span> <br>
+            <span style="font-size: 12px;" class="text-bold">4. TIKET HILANG DENDA: Motor Rp20.000 | Mobil Rp50.000 (Wajib STNK).</span>
         </div>
     </div>
 

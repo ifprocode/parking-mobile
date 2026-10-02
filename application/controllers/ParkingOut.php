@@ -43,7 +43,7 @@ class ParkingOut extends CI_Controller {
             redirect('parkingout/scan');
         }
 
-        // Calculate exact duration here for confirm page
+        // Calculate exact duration
         $time_in_stamp = strtotime($transaction->time_in);
         $time_out_stamp = time();
         $diff_seconds = $time_out_stamp - $time_in_stamp;
@@ -53,51 +53,18 @@ class ParkingOut extends CI_Controller {
         $hours = floor(($diff_seconds % 86400) / 3600);
         $minutes = floor(($diff_seconds % 3600) / 60);
         $duration_text = "{$days} Hari {$hours} Jam {$minutes} Menit";
-
-        $data['show_navbar'] = true;
-        $data['receipt'] = $transaction->receipt_number;
-        $data['plate'] = $transaction ? $transaction->plate_number : 'NOT FOUND';
-        $data['time_in'] = $transaction ? date('H:i:s d M Y', strtotime($transaction->time_in)) : date('H:i:s d M Y');
-        $data['time_out'] = date('H:i:s d M Y', $time_out_stamp); // current time
-        $data['duration_text'] = $duration_text;
-        $data['photo_in'] = ($transaction && $transaction->photo_in) ? base_url('foto/' . $transaction->photo_in) : 'https://placehold.co/150x100/333/fff?text=No+Photo';
         
-        $this->load->view('layout/header', $data);
-        $this->load->view('parking_out/confirm', $data);
-        $this->load->view('layout/footer');
-    }
-
-    public function receipt()
-    {
-        $receipt = $this->input->post('receipt');
-        $time_out_str = $this->input->post('time_out');
-        
-        $transaction = $this->Parking_model->get_transaction_by_receipt($receipt);
-        
-        $time_in = strtotime($transaction->time_in);
-        // Convert submitted time string back to timestamp (format: H:i:s d M Y)
-        $time_out = strtotime($time_out_str); 
-        
-        $diff_seconds = $time_out - $time_in;
-        if ($diff_seconds < 0) $diff_seconds = 0;
-        
-        $days = floor($diff_seconds / 86400);
-        $hours = floor(($diff_seconds % 86400) / 3600);
-        $minutes = floor(($diff_seconds % 3600) / 60);
-        
-        $duration_text = "{$days} Hari {$hours} Jam {$minutes} Menit";
-        
-        // Save outflow
+        // Save outflow automatically without button
         $this->Parking_model->save_outflow($receipt, [
-            'time_out' => date('Y-m-d H:i:s', $time_out),
+            'time_out' => date('Y-m-d H:i:s', $time_out_stamp),
             'status' => 'out'
         ]);
 
         $data['show_navbar'] = true;
-        $data['receipt'] = $receipt;
+        $data['receipt'] = $transaction->receipt_number;
         $data['duration'] = $duration_text;
         $data['total_fare'] = 'Rp ' . number_format($transaction->total_fare, 0, ',', '.');
-        $data['photo_in'] = $transaction->photo_in ? base_url('foto/' . $transaction->photo_in) : 'https://placehold.co/150x100/333/fff?text=Car+In';
+        $data['photo_in'] = ($transaction && $transaction->photo_in) ? base_url('foto/' . $transaction->photo_in) : 'https://placehold.co/150x100/333/fff?text=No+Photo';
 
         $this->load->view('layout/header', $data);
         $this->load->view('parking_out/receipt', $data);

@@ -34,8 +34,8 @@
 <!-- Loading Overlay -->
 <div id="loading-overlay" class="position-fixed w-100 h-100 d-none flex-column align-items-center justify-content-center" style="top: 0; left: 0; background: rgba(0,0,0,0.8); z-index: 9999;">
     <div class="spinner-border text-light mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
-    <h5 class="text-white fw-bold">Mengekstrak Plat Nomor...</h5>
-    <small class="text-white-50">Mohon tunggu, proses ini mungkin memakan waktu beberapa detik.</small>
+    <h5 class="text-white fw-bold">Menyimpan...</h5>
+    <small class="text-white-50">Mohon tunggu sebentar.</small>
 </div>
 
 <!-- Hidden Canvas for Snapshot -->
@@ -48,8 +48,7 @@
     <input type="hidden" name="tarif_id" value="<?= isset($tarif_id) ? $tarif_id : '' ?>">
 </form>
 
-<!-- Tesseract.js -->
-<script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+<!-- Removed Tesseract.js -->
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -78,7 +77,7 @@
         }
 
         // Capture Button Event
-        captureBtn.addEventListener('click', async function() {
+        captureBtn.addEventListener('click', function() {
             // 1. Show Loading Overlay
             loadingOverlay.classList.remove('d-none');
             loadingOverlay.classList.add('d-flex');
@@ -93,34 +92,11 @@
             const base64Image = canvas.toDataURL('image/jpeg');
             photoInput.value = base64Image;
 
-            try {
-                // 4. Run Tesseract OCR on the image
-                const worker = await Tesseract.createWorker('eng');
-                const ret = await worker.recognize(base64Image);
-                await worker.terminate();
+            // 4. Default plate to "-"
+            plateInput.value = "-";
                 
-                // 5. Clean up OCR text (remove non-alphanumeric, newlines, etc.)
-                let text = ret.data.text.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
-                
-                // Batasi hingga 10 karakter
-                text = text.substring(0, 10);
-                
-                // Set fallback if empty
-                if (!text || text.trim() === '') {
-                    text = "UNREADABLE";
-                }
-
-                plateInput.value = text;
-                
-                // 6. Submit the form
-                ocrForm.submit();
-
-            } catch (err) {
-                console.error("OCR Error:", err);
-                // Even if OCR fails, we submit with "ERROR" so the flow isn't blocked completely
-                plateInput.value = "ERROR";
-                ocrForm.submit();
-            }
+            // 5. Submit the form
+            ocrForm.submit();
         });
     });
 </script>
