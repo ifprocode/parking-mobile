@@ -53,8 +53,11 @@ $route['default_controller'] = 'auth/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-// Custom routes to fix case-sensitivity on Linux production servers
-$route['parkingin'] = 'ParkingIn';
-$route['parkingin/(:any)'] = 'ParkingIn/$1';
-$route['parkingout'] = 'ParkingOut';
-$route['parkingout/(:any)'] = 'ParkingOut/$1';
+// Explicit routing for all controllers to avoid case-sensitivity issues on Linux
+$controllers = ['Admin', 'Auth', 'Dashboard', 'ParkingIn', 'ParkingOut', 'Welcome'];
+
+foreach ($controllers as $controller) {
+    $lower = strtolower($controller);
+    $route[$lower] = $controller;
+    $route[$lower . '/(:any)'] = $controller . '/$1';
+}
