@@ -108,6 +108,49 @@ class Auth extends CI_Controller {
             $this->load->view('layout/footer');
         }
     }
+    public function register()
+    {
+        if ($this->input->post()) {
+            $name = $this->input->post('name');
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+            $confirm_password = $this->input->post('confirm_password');
+
+            if ($password !== $confirm_password) {
+                $this->session->set_flashdata('error', 'Password tidak cocok.');
+                redirect('auth/register');
+            }
+
+            // Check if email already exists
+            $this->db->where('email', $email);
+            $query = $this->db->get('users');
+            if ($query->num_rows() > 0) {
+                $this->session->set_flashdata('error', 'Email sudah terdaftar.');
+                redirect('auth/register');
+            }
+
+            // Insert new user
+            $data = [
+                'name' => $name,
+                'email' => $email,
+                'password' => md5($password),
+                'role' => 'operator' // Default role
+            ];
+
+            if ($this->db->insert('users', $data)) {
+                $this->session->set_flashdata('success', 'Registrasi berhasil. Silakan login.');
+                redirect('auth/login');
+            } else {
+                $this->session->set_flashdata('error', 'Terjadi kesalahan saat registrasi.');
+                redirect('auth/register');
+            }
+        } else {
+            $data['show_navbar'] = false;
+            $this->load->view('layout/header', $data);
+            $this->load->view('auth/register');
+            $this->load->view('layout/footer');
+        }
+    }
 
     public function logout()
     {
