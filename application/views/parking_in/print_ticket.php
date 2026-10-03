@@ -81,6 +81,7 @@
     <div class="text-center">
         <!-- Using external APIs for QR and Barcode generation as requested -->
         <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=<?= $trx->receipt_number ?>" alt="QR">
+        <div style="font-size: 11px; margin-top: 5px;" class="text-bold" >WAJIB SCAN QR CODE SAAT KELUAR</div>
         
         <div style="font-size: 10px; margin-top: 8px;">
             <span style="font-size: 12px;" class="text-bold">KETENTUAN PARKIR</span> <br>
