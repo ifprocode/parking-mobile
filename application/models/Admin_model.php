@@ -79,11 +79,11 @@ class Admin_model extends CI_Model {
 
     public function get_income_per_user()
     {
-        $this->db->select('u.name, SUM(p.total_fare) as total_income');
+        $this->db->select('u.name, u.gate, SUM(p.total_fare) as total_income');
         $this->db->from('parking_transactions p');
         $this->db->join('users u', 'p.operator_id = u.id');
         $this->db->where("(p.status != 'cancelled' OR p.status IS NULL)", null, false);
-        $this->db->group_by('u.id, u.name');
+        $this->db->group_by('u.id, u.name, u.gate');
         return $this->db->get()->result();
     }
 

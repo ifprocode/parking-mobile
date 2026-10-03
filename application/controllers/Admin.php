@@ -152,7 +152,8 @@ class Admin extends CI_Controller {
         $data = [
             'name' => $this->input->post('name'),
             'email' => $this->input->post('email'),
-            'role' => $this->input->post('role')
+            'role' => $this->input->post('role'),
+            'gate' => $this->input->post('gate')
         ];
         
         $password = $this->input->post('password');

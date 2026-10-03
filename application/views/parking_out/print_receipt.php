@@ -38,6 +38,10 @@
     <div style="margin-bottom: 5px;" class="text-bold">
         Plat Nomor : <?= htmlspecialchars($trx->plate_number) ?>
     </div>
+
+    <div style="margin-bottom: 5px;" class="text-bold">
+        Pos : Gate <?= $this->session->userdata('gate') ?> (Keluar)
+    </div>
     
     <table>
         <tr>

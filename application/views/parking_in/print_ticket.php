@@ -62,7 +62,7 @@
         <tr>
             <td style="vertical-align: top;">Pos</td>
             <td style="vertical-align: top;">:</td>
-            <td>GATE 1 (Masuk)</td>
+            <td>Gate <?= $this->session->userdata('gate') ?: '1' ?> (Masuk)</td>
         </tr>
         <tr>
             <td style="vertical-align: top;">Total Tarif</td>
@@ -81,14 +81,13 @@
     <div class="text-center">
         <!-- Using external APIs for QR and Barcode generation as requested -->
         <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=<?= $trx->receipt_number ?>" alt="QR">
-        <div style="font-size: 11px; margin-top: 5px;" class="text-bold" >SCAN QR SAAT KELUAR</div>
         
         <div style="font-size: 10px; margin-top: 8px;">
             <span style="font-size: 12px;" class="text-bold">KETENTUAN PARKIR</span> <br>
-            <span style="font-size: 12px;" class="text-bold">1. Tiket parkir berlaku untuk 1 (satu) kendaraan dan 1 (satu) kali keluar.</span> <br>
-            <span style="font-size: 12px;" class="text-bold">2. Tiket wajib disimpan dan ditunjukkan kepada petugas saat kendaraan keluar.</span> <br>
-            <span style="font-size: 12px;" class="text-bold">3. Pengelola BHC Parkir tidak bertanggung jawab atas kehilangan atau kerusakan kendaraan maupun barang pribadi akibat kelalaian pengguna.</span> <br>
-            <span style="font-size: 12px;" class="text-bold">4. TIKET HILANG DENDA: Motor Rp20.000 | Mobil Rp50.000 (Wajib STNK).</span>
+            <span style="font-size: 12px;" class="text-bold">1. TIKET HILANG DENDA: Motor Rp20.000 | Mobil Rp50.000 (Wajib STNK).</span> <br>
+            <span style="font-size: 12px;" class="text-bold">2. Tiket parkir berlaku untuk 1 (satu) kendaraan.</span> <br>
+            <span style="font-size: 12px;" class="text-bold">3. Tiket wajib disimpan dan ditunjukkan kepada petugas saat kendaraan keluar.</span> <br>
+            <span style="font-size: 12px;" class="text-bold">4. Pengelola BHC Parkir tidak bertanggung jawab atas kehilangan atau kerusakan kendaraan maupun barang pribadi akibat kelalaian pengguna.</span>
         </div>
     </div>
 

@@ -84,7 +84,7 @@
 
     function manualEntry() {
         // If they click manual, ask for a receipt number prompt, or just submit the mock
-        let manualReceipt = prompt("Masukkan Nomor Resi:", "SP-12345");
+        let manualReceipt = prompt("Masukkan Nomor Resi:", "");
         if (manualReceipt != null && manualReceipt != "") {
             document.getElementById('receipt-input').value = manualReceipt;
             document.getElementById('scan-form').submit();

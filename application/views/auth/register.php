@@ -27,9 +27,18 @@
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
             
-            <div class="mb-4">
+            <div class="mb-3">
                 <label for="confirm_password" class="form-label">Konfirmasi Password</label>
                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="gate" class="form-label">Gate</label>
+                <select class="form-control" id="gate" name="gate" required>
+                    <option value="" disabled selected>Pilih Gate</option>
+                    <option value="Mobil">Mobil</option>
+                    <option value="Motor">Motor</option>
+                </select>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">REGISTER</button>

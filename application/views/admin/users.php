@@ -24,6 +24,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Gate</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -34,8 +35,9 @@
                             <td class="fw-bold"><?= $u->name ?></td>
                             <td><?= $u->email ?></td>
                             <td><span class="badge <?= $u->role == 'admin' ? 'bg-danger' : 'bg-primary' ?>"><?= strtoupper($u->role) ?></span></td>
+                            <td><?= isset($u->gate) && !empty($u->gate) ? $u->gate : '-' ?></td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary" onclick="editUser(<?= $u->id ?>, '<?= $u->name ?>', '<?= $u->email ?>', '<?= $u->role ?>')"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="editUser(<?= $u->id ?>, '<?= $u->name ?>', '<?= $u->email ?>', '<?= $u->role ?>', '<?= isset($u->gate) ? $u->gate : '' ?>')"><i class="bi bi-pencil"></i></button>
                                 <?php if($u->id != $this->session->userdata('id')): ?>
                                 <a href="<?= base_url('admin/delete_user/'.$u->id) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin hapus user ini?')"><i class="bi bi-trash"></i></a>
                                 <?php endif; ?>
@@ -83,6 +85,15 @@
                     <option value="admin">ADMIN</option>
                 </select>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label">Gate <small class="text-muted">(Optional untuk Admin)</small></label>
+                <select class="form-select" name="gate" id="gate">
+                    <option value="">-- Pilih Gate --</option>
+                    <option value="Mobil">Mobil</option>
+                    <option value="Motor">Motor</option>
+                </select>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -100,14 +111,16 @@ function resetForm() {
     document.getElementById('email').value = '';
     document.getElementById('password').value = '';
     document.getElementById('role').value = 'operator';
+    document.getElementById('gate').value = '';
 }
 
-function editUser(id, name, email, role) {
+function editUser(id, name, email, role, gate) {
     document.getElementById('user_id').value = id;
     document.getElementById('name').value = name;
     document.getElementById('email').value = email;
     document.getElementById('password').value = '';
     document.getElementById('role').value = role;
+    document.getElementById('gate').value = gate;
     
     var userModal = new bootstrap.Modal(document.getElementById('userModal'));
     userModal.show();

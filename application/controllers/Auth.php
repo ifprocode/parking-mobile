@@ -35,6 +35,7 @@ class Auth extends CI_Controller {
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => isset($user->role) ? $user->role : 'operator',
+                    'gate' => isset($user->gate) ? $user->gate : '',
                     'logged_in' => TRUE
                 );
                 $this->session->set_userdata($session_data);
@@ -69,6 +70,7 @@ class Auth extends CI_Controller {
                             'name' => $user->name,
                             'email' => $user->email,
                             'role' => isset($user->role) ? $user->role : 'operator',
+                            'gate' => isset($user->gate) ? $user->gate : '',
                             'logged_in' => TRUE
                         );
                         $this->session->set_userdata($session_data);
@@ -115,6 +117,7 @@ class Auth extends CI_Controller {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
             $confirm_password = $this->input->post('confirm_password');
+            $gate = $this->input->post('gate');
 
             if ($password !== $confirm_password) {
                 $this->session->set_flashdata('error', 'Password tidak cocok.');
@@ -134,7 +137,8 @@ class Auth extends CI_Controller {
                 'name' => $name,
                 'email' => $email,
                 'password' => md5($password),
-                'role' => 'operator' // Default role
+                'role' => 'operator', // Default role
+                'gate' => $gate
             ];
 
             if ($this->db->insert('users', $data)) {

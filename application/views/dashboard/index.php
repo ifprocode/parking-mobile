@@ -63,7 +63,10 @@
                     <ul class="list-group list-group-flush" style="font-size: 0.8rem;">
                         <?php foreach($income_per_user as $iu): ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <?= htmlspecialchars($iu->name) ?>
+                            <div>
+                                <?= htmlspecialchars($iu->name) ?> 
+                                <small class="text-muted">(Gate <?= htmlspecialchars($iu->gate ?: '-') ?>)</small>
+                            </div>
                             <span class="fw-bold">Rp <?= number_format($iu->total_income, 0, ',', '.') ?></span>
                         </li>
                         <?php endforeach; ?>
