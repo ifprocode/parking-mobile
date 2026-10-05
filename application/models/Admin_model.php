@@ -166,11 +166,16 @@ class Admin_model extends CI_Model {
     }
 
     // Vehicles
-    public function get_all_vehicles($search = null, $date = null, $status = null)
+    public function get_all_vehicles($search = null, $date = null, $status = null, $operator_id = null)
     {
-        $this->db->select('parking_transactions.*, tarifs.vehicle_type');
+        $this->db->select('parking_transactions.*, tarifs.vehicle_type, users.name as operator_name');
         $this->db->from('parking_transactions');
         $this->db->join('tarifs', 'parking_transactions.tarif_id = tarifs.id', 'left');
+        $this->db->join('users', 'parking_transactions.operator_id = users.id', 'left');
+        
+        if ($operator_id) {
+            $this->db->where('parking_transactions.operator_id', $operator_id);
+        }
         
         if ($search) {
             $this->db->group_start();

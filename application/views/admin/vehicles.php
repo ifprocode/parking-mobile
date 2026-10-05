@@ -14,8 +14,16 @@
                     <option value="belum_keluar" <?= (isset($status) && $status == 'belum_keluar') ? 'selected' : '' ?>>Belum Keluar</option>
                     <option value="batal" <?= (isset($status) && $status == 'batal') ? 'selected' : '' ?>>Dibatalkan</option>
                 </select>
+                <select name="operator_id" class="form-select" style="width: auto;">
+                    <option value="">Semua Operator</option>
+                    <?php if(!empty($users)): ?>
+                        <?php foreach($users as $u): ?>
+                            <option value="<?= $u->id ?>" <?= (isset($operator_id) && $operator_id == $u->id) ? 'selected' : '' ?>><?= $u->name ?></option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
                 <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Cari</button>
-                <?php if(!empty($search) || !empty($date) || !empty($status)): ?>
+                <?php if(!empty($search) || !empty($date) || !empty($status) || !empty($operator_id)): ?>
                     <a href="<?= base_url('admin/vehicles') ?>" class="btn btn-outline-secondary">Reset</a>
                 <?php endif; ?>
             </form>
@@ -46,7 +54,8 @@
                             <tr>
                                 <td class="ps-3">
                                     <div class="fw-bold text-primary"><?= $t->plate_number ?></div>
-                                    <small class="text-muted"><?= $t->receipt_number ?></small>
+                                    <small class="text-muted"><?= $t->receipt_number ?></small><br>
+                                    <small class="text-muted" style="font-size: 0.75rem;"><i class="bi bi-person-circle"></i> <?= isset($t->operator_name) && $t->operator_name ? $t->operator_name : 'Sistem' ?></small>
                                 </td>
                                 <td>
                                     <?php 
