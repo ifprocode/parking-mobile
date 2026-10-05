@@ -9,8 +9,13 @@
             <form action="<?= base_url('admin/vehicles') ?>" method="GET" class="d-flex flex-wrap gap-2">
                 <input type="date" name="date" class="form-control" style="width: auto;" value="<?= isset($date) ? htmlspecialchars($date) : '' ?>">
                 <input type="text" name="search" class="form-control" style="flex: 1;" placeholder="Cari Nomor Tiket / Plat Nomor..." value="<?= isset($search) ? htmlspecialchars($search) : '' ?>">
+                <select name="status" class="form-select" style="width: auto;">
+                    <option value="">Semua Status</option>
+                    <option value="belum_keluar" <?= (isset($status) && $status == 'belum_keluar') ? 'selected' : '' ?>>Belum Keluar</option>
+                    <option value="batal" <?= (isset($status) && $status == 'batal') ? 'selected' : '' ?>>Dibatalkan</option>
+                </select>
                 <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Cari</button>
-                <?php if(!empty($search) || !empty($date)): ?>
+                <?php if(!empty($search) || !empty($date) || !empty($status)): ?>
                     <a href="<?= base_url('admin/vehicles') ?>" class="btn btn-outline-secondary">Reset</a>
                 <?php endif; ?>
             </form>
@@ -24,6 +29,7 @@
                     <thead class="table-light">
                         <tr>
                             <th class="ps-3">Plat / Resi</th>
+                            <th>Foto / Jenis</th>
                             <th>Waktu Masuk</th>
                             <th>Waktu Keluar</th>
                             <th class="text-end">Tarif</th>
@@ -33,7 +39,7 @@
                     <tbody>
                         <?php if(empty($transactions)): ?>
                         <tr>
-                            <td colspan="4" class="text-center py-4 text-muted">Belum ada data transaksi.</td>
+                            <td colspan="6" class="text-center py-4 text-muted">Belum ada data transaksi.</td>
                         </tr>
                         <?php else: ?>
                             <?php foreach($transactions as $t): ?>
@@ -41,6 +47,19 @@
                                 <td class="ps-3">
                                     <div class="fw-bold text-primary"><?= $t->plate_number ?></div>
                                     <small class="text-muted"><?= $t->receipt_number ?></small>
+                                </td>
+                                <td>
+                                    <?php 
+                                        $foto_path = FCPATH . 'foto/' . $t->photo_in;
+                                        if(!empty($t->photo_in) && file_exists($foto_path)): 
+                                    ?>
+                                        <a href="<?= base_url('foto/'.$t->photo_in) ?>" target="_blank">
+                                            <img src="<?= base_url('foto/'.$t->photo_in) ?>" alt="Foto" class="img-thumbnail me-1" style="max-height: 40px;">
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="badge bg-secondary mb-1">No Photo</span><br>
+                                    <?php endif; ?>
+                                    <span class="badge bg-info text-dark"><?= isset($t->vehicle_type) ? $t->vehicle_type : '-' ?></span>
                                 </td>
                                 <td>
                                     <small><?= date('d M Y', strtotime($t->time_in)) ?></small><br>

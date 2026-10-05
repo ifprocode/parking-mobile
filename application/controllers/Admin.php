@@ -79,11 +79,13 @@ class Admin extends CI_Controller {
     {
         $search = $this->input->get('search');
         $date = $this->input->get('date');
+        $status = $this->input->get('status');
         $data['show_navbar'] = true;
         $data['active_menu'] = 'vehicles';
         $data['search'] = $search;
         $data['date'] = $date;
-        $data['transactions'] = $this->Admin_model->get_all_vehicles($search, $date);
+        $data['status'] = $status;
+        $data['transactions'] = $this->Admin_model->get_all_vehicles($search, $date, $status);
 
         $this->load->view('layout/header', $data);
         $this->load->view('admin/vehicles', $data);

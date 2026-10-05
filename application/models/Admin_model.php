@@ -166,19 +166,29 @@ class Admin_model extends CI_Model {
     }
 
     // Vehicles
-    public function get_all_vehicles($search = null, $date = null)
+    public function get_all_vehicles($search = null, $date = null, $status = null)
     {
+        $this->db->select('parking_transactions.*, tarifs.vehicle_type');
+        $this->db->from('parking_transactions');
+        $this->db->join('tarifs', 'parking_transactions.tarif_id = tarifs.id', 'left');
+        
         if ($search) {
             $this->db->group_start();
-            $this->db->like('receipt_number', $search);
-            $this->db->or_like('plate_number', $search);
+            $this->db->like('parking_transactions.receipt_number', $search);
+            $this->db->or_like('parking_transactions.plate_number', $search);
             $this->db->group_end();
         }
         if ($date) {
-            $this->db->where('CONVERT(date, time_in) =', $date);
+            $this->db->where('CONVERT(date, parking_transactions.time_in) =', $date);
         }
-        $this->db->order_by('time_in', 'DESC');
-        return $this->db->get('parking_transactions')->result();
+        if ($status == 'belum_keluar') {
+            $this->db->where('parking_transactions.time_out IS NULL', null, false);
+            $this->db->where("(parking_transactions.status != 'cancelled' OR parking_transactions.status IS NULL)", null, false);
+        } elseif ($status == 'batal') {
+            $this->db->where('parking_transactions.status', 'cancelled');
+        }
+        $this->db->order_by('parking_transactions.time_in', 'DESC');
+        return $this->db->get()->result();
     }
 
     public function cancel_vehicle($id)

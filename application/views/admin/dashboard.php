@@ -39,7 +39,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="card-title text-white-50 mb-1">Pendapatan</h6>
-                            <h5 class="fw-bold mb-0">Rp <?= number_format($overall_metrics['total_income'], 0, ',', '.') ?></h5>
+                            <h5 class="fw-bold mb-0">Rp <?= number_format($metrics['total_income'], 0, ',', '.') ?></h5>
                         </div>
                         <i class="bi bi-wallet2 fs-1 text-white-50"></i>
                     </div>
@@ -68,7 +68,7 @@
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body text-center">
                     <h6 class="text-muted mb-1 small">Total Transaksi</h6>
-                    <h4 class="fw-bold text-primary mb-0"><?= $metrics['total_in'] ?></h4>
+                    <h4 class="fw-bold text-primary mb-0"><?= $overall_metrics['total_in'] ?></h4>
                 </div>
             </div>
         </div>
