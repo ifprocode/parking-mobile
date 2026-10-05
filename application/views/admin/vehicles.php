@@ -53,8 +53,8 @@
                                         $foto_path = FCPATH . 'foto/' . $t->photo_in;
                                         if(!empty($t->photo_in) && file_exists($foto_path)): 
                                     ?>
-                                        <a href="<?= base_url('foto/'.$t->photo_in) ?>" target="_blank">
-                                            <img src="<?= base_url('foto/'.$t->photo_in) ?>" alt="Foto" class="img-thumbnail me-1" style="max-height: 40px;">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#photoModal" onclick="document.getElementById('modalImage').src='<?= base_url('foto/'.$t->photo_in) ?>'">
+                                            <img src="<?= base_url('foto/'.$t->photo_in) ?>" alt="Foto" class="img-thumbnail me-1" style="max-height: 40px; cursor: pointer;">
                                         </a>
                                     <?php else: ?>
                                         <span class="badge bg-secondary mb-1">No Photo</span><br>
@@ -98,4 +98,19 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Photo Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="photoModalLabel">Foto Kendaraan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center p-0">
+        <img id="modalImage" src="" alt="Foto Besar" class="img-fluid w-100">
+      </div>
+    </div>
+  </div>
 </div>
