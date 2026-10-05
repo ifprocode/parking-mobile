@@ -99,6 +99,13 @@ class Admin extends CI_Controller {
         redirect('admin/vehicles');
     }
 
+    public function reactivate_vehicle($id)
+    {
+        $this->Admin_model->reactivate_vehicle($id);
+        $this->session->set_flashdata('success', 'Status kendaraan berhasil diaktifkan kembali.');
+        redirect('admin/vehicles');
+    }
+
     // 4. Headers
     public function headers()
     {

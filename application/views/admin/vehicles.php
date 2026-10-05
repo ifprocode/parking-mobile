@@ -88,6 +88,10 @@
                                         <a href="<?= base_url('admin/cancel_vehicle/'.$t->id) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin membatalkan kendaraan ini (Tidak jadi parkir)?')">
                                             <i class="bi bi-x-circle"></i> Batal
                                         </a>
+                                    <?php else: ?>
+                                        <a href="<?= base_url('admin/reactivate_vehicle/'.$t->id) ?>" class="btn btn-sm btn-outline-success" onclick="return confirm('Yakin ingin mengaktifkan kembali kendaraan ini?')">
+                                            <i class="bi bi-check-circle"></i> Aktifkan
+                                        </a>
                                     <?php endif; ?>
                                 </td>
                             </tr>

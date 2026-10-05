@@ -201,6 +201,30 @@ class Admin_model extends CI_Model {
         $this->db->where('id', $id);
         return $this->db->update('parking_transactions', $data);
     }
+
+    public function reactivate_vehicle($id)
+    {
+        // Get tarif_id to restore flat_fare
+        $this->db->select('tarif_id');
+        $this->db->where('id', $id);
+        $trx = $this->db->get('parking_transactions')->row();
+        
+        $flat_fare = 0;
+        if ($trx && $trx->tarif_id) {
+            $tarif = $this->db->get_where('tarifs', ['id' => $trx->tarif_id])->row();
+            if ($tarif) {
+                $flat_fare = $tarif->flat_fare;
+            }
+        }
+
+        $data = [
+            'status' => 'paid',
+            'time_out' => NULL,
+            'total_fare' => $flat_fare
+        ];
+        $this->db->where('id', $id);
+        return $this->db->update('parking_transactions', $data);
+    }
     // Users
     public function get_all_users()
     {
